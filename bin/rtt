@@ -10,5 +10,5 @@ tagger = TreeTagger::Tagger.new(options)
 
 while line = ARGF.gets
   # [['token', 'tag', 'lemma'], ['token', 'tag', 'lemma']]
-  puts  tagger.process(line)
+  puts  tagger.process(line.chomp)
 end
