@@ -2,7 +2,7 @@
 
 * {RubyGems}[http://rubygems.org/gems/treetagger-ruby]
 * Developers {Homepage}[http://bu.chsta.be/]
-* {WLAPI Project Page}[http://bu.chsta.be/projects/treetagger-ruby/]
+* {RTT Project Page}[http://bu.chsta.be/projects/treetagger-ruby/]
 * {Source Code}[https://github.com/arbox/treetagger-ruby]
 * {Bug Tracker}[https://github.com/arbox/treetagger-ruby/issues]
 
