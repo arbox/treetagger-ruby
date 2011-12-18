@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 # rtt - Ruby TreeTagger
 
-require 'treetagger/tagger'
-require 'treetagger/argv_parser'
+require 'tree_tagger/tagger'
+require 'tree_tagger/argv_parser'
 
 options = TreeTagger::ARGVParser.parse(ARGV)
 
