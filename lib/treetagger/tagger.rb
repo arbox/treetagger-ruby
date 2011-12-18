@@ -14,7 +14,7 @@ module TreeTagger
       @opt = opts
     end
     def process(str)
-      %x("echo '#{str}' | #{ENV['TREETAGGERHOME']}/cmd/tree-tagger-german")
+      %x(echo '#{str}' | #{ENV['TREETAGGERHOME']}/cmd/tree-tagger-german)
     end
   end # class
 end # module
