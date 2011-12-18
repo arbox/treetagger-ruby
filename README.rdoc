@@ -1,1 +1,63 @@
+= TreeTagger for Ruby
+
+* {RubyGems}[http://rubygems.org/gems/treetagger-ruby]
+* Developers {Homepage}[http://bu.chsta.be/]
+* {WLAPI Project Page}[http://bu.chsta.be/projects/treetagger-ruby/]
+* {Source Code}[https://github.com/arbox/treetagger-ruby]
+* {Bug Tracker}[https://github.com/arbox/treetagger-ruby/issues]
+
+== DESCRIPTION
 The Ruby based wrapper for the TreeTagger by Helmut Schmid.
+Check it out if you are interested
+in Natural Language Processing (NLP) and Human Language Technology (HLT).
+=== Implemented Features
+Simple tagging.
+
+
+== INSTALLATION
+<tt>treetagger-ruby</tt> is provided as a .gem package. Simply install it via
+{RubyGems}[http://rubygems.org/gems/treetagger-ruby].
+To install <tt>treetagger-ruby</tt> ussue the following command:
+  $ gem install treetagger-ruby
+
+If you want to do a system wide installation, do this as root
+(possibly using +sudo+).
+
+Alternatively use your Gemfile for dependency management.
+
+
+== SYNOPSIS
+
+Basic usage is very simple:
+  $ require 'treetagger-ruby'
+  $ tagger = TreeTagger::Tagger.new
+  $ api.process('Ich gehe in die Schule')
+
+See documentation in the TreeTagger::Tagger class for details
+on particular search methods.
+
+== EXCEPTION HIERARCHY
+While using TreeTagger you can face following errors:
+* <tt>TreeTagger::UserError</tt>;
+* <tt>TreeTagger::RuntimeError</tt>;
+* <tt>TreeTagger::ExternalError</tt>.
+
+== SUPPORT
+If you have question, bug reports or any suggestions, please drop me an email :) 
+Any help is deeply appreciated!
+
+== CHANGELOG
+For details on future plan and working progress see CHANGELOG.
+
+== CAUTION
+This library is <b>work in process</b>! Though the interface is mostly complete,
+you might face some not implemented features.
+
+Please contact me with your suggestions, bug reports and feature requests.
+== LICENSE
+
+RTT is a copyrighted software by Andrei Beliankou, 2011-
+
+You may use, redistribute and change it under the terms
+provided in the LICENSE file.
+
