@@ -14,7 +14,8 @@ module TreeTagger
       @opt = opts
     end
     def process(str)
-      %x(echo '#{str}' | #{ENV['TREETAGGERHOME']}/cmd/tree-tagger-german)
+      line = %x(echo '#{str}' | #{ENV['TREETAGGERHOME']}/cmd/tree-tagger-german)
+      arr = line.split("\n").collect { |el| el.split("\t") }
     end
   end # class
 end # module
