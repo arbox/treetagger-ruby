@@ -2,7 +2,7 @@ lib_path = File.expand_path(File.dirname(__FILE__) + '/lib')
 $LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
 
 require 'rake'
-require 'treetagger/version'
+require 'tree_tagger/version'
 
 # Define a constant here to use this spec in the Rakefile.
 Gem::Specification.new do |s|
@@ -14,6 +14,8 @@ Gem::Specification.new do |s|
   s.author = "Andrei Beliankou"
   s.email = "a.belenkow@uni-trier.de"
   s.homepage = "http://www.uni-trier.de/index.php?id=34451"
+  s.bindir = 'bin'
+  s.executables << 'rtt'
   s.add_development_dependency('rdoc', '>=3.9.1')
   s.add_development_dependency('bundler')
   s.add_development_dependency('yard')
