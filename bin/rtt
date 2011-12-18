@@ -10,5 +10,22 @@ tagger = TreeTagger::Tagger.new(options)
 
 while line = ARGF.gets
   # [['token', 'tag', 'lemma'], ['token', 'tag', 'lemma']]
-  puts  tagger.process(line.chomp)
+  result_array = tagger.process(line.chomp)
+
+  # Adding some colors to the output.
+  # Using ANSI escape codes.
+  red   = "\e[31m"
+  green = "\e[32m"
+  blue  = "\e[34m"
+  reset = "\e[0m"
+  
+  result_array.each do |tuple|
+    if $stdout.tty?
+      tuple[0].insert(0, red).insert(-1, reset)
+      tuple[1].insert(0, green).insert(-1, reset)
+      tuple[2].insert(0, blue).insert(-1, reset)
+    end
+    
+    $stdout.puts tuple.join("\t")
+  end
 end
