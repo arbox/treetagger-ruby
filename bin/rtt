@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+# rtt - Ruby TreeTagger
+
+require 'treetagger/tagger'
+require 'treetagger/argv_parser'
+
+options = TreeTagger::ARGVParser.parse(ARGV)
+
+tagger = TreeTagger::Tagger.new(options)
+
+while line = ARGF.gets
+  # [['token', 'tag', 'lemma'], ['token', 'tag', 'lemma']]
+  puts  tagger.process(line)
+end
