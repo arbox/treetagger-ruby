@@ -25,13 +25,13 @@ module TreeTagger
     def initialize(*args)
       @cmdline = "#{ENV['TREETAGGERHOME']}/bin/tree-tagger " +
         "-token -lemma -sgml -quiet #{ENV['TREETAGGERHOME']}/lib/german.par"
-      @queue = []
+      @queue = Queue.new
       @pipe = create_pipe
       @pipe.sync = true
       @reader = start_reader
       @inside_output = false
       @inside_input = false
-      @number_of_tokens = 0
+      @enqueued_tokens = 0
       @mutex = Mutex.new
     end
 
@@ -46,38 +46,33 @@ module TreeTagger
       else
         str = str + "\n"
       end
+      @mutex.synchronize { @enqueued_tokens += 1 }
       @pipe.print(str)
     end
 
     # Get processed tokens back.
+    # This method is not blocking. If some tokens have been sent,
+    # but not received from the pipe yet, it returns an empty array.
+    # If all sent tokens are in the queue it returns all of them.
+    # If no more tokens are awaited it returns <nil>.
     def get_output
-      # Here invoke the reader thread.
-      
-      $stderr.puts @queue if $DEBUG
       output = []
-      while str = @queue.shift
-        case str
-        when BEGIN_MARKER
-          @inside_output = true
-          $stderr.puts 'Found the begin marker.' if $DEBUG
-        when END_MARKER
-          @inside_output = false
-          $stderr.puts 'Found the end marker.' if $DEBUG
-        else
-          output << str if @inside_output
-        end
+      
+      tokens = @queue.size
+      tokens.times do
+        output << @queue.shift
+      end
+      @mutex.synchronize do
+        @enqueued_tokens -= tokens
       end
 
-      # Assertion: we've read at least one whole chunk
-      # between the BEGIN and END conditions.
-      # Thus <write_condition> cannot be true here.
-      if @inside_output
-        fail "Not the whole chunk read!"
+      # Nil if nothing to process in the pipe.
+      # Possible only after flushing the pipe.
+      if @enqueued_tokens > 0
+        output
+      else
+        output.any? ? output : nil
       end
-
-      # If the reader thread didn't run we force an iteration
-      # and wait on the valid output.
-      output.empty? ? get_output : output
     end
     
     # Get the rest of the text back.
@@ -88,6 +83,7 @@ module TreeTagger
       @pipe.print(str)
       # Here invoke the reader thread to ensure
       # all output has been read.
+      #@reader.run
     end
     
     private
@@ -95,14 +91,26 @@ module TreeTagger
     def start_reader
       Thread.new do
         while line = @pipe.gets
-          # The output strings do not contain "\n".
-          @queue.push(line.chomp)
-          $stderr.puts 'Added to the queue.' if $DEBUG
+          # The output strings must not contain "\n".
+          line.chomp!
+          case line
+          when BEGIN_MARKER
+            @inside_output = true
+            $stderr.puts 'Found the begin marker.' if $DEBUG
+          when END_MARKER
+            @inside_output = false
+            $stderr.puts 'Found the end marker.' if $DEBUG
+          else
+            if @inside_output
+              @queue << line
+              $stderr.puts "<#{line}> added to the queue." if $DEBUG
+            end
+          end
         end
-      end
-    end
-
-    # This method may be obsolete.
+      end # thread
+    end # start_reader
+    
+    # This method may be utilized to keep the TT process alive.
     def create_pipe
       IO.popen(@cmdline, 'r+')
     end
