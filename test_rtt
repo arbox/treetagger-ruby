@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+printf "Ich\ngehe\nin\n \ndie\nSchule\n." | ruby -I lib bin/rtt
