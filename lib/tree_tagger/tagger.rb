@@ -31,6 +31,8 @@ module TreeTagger
       @reader = start_reader
       @inside_output = false
       @inside_input = false
+      @number_of_tokens = 0
+      @mutex = Mutex.new
     end
 
     # Send the string to the TreeTagger.
@@ -49,6 +51,8 @@ module TreeTagger
 
     # Get processed tokens back.
     def get_output
+      # Here invoke the reader thread.
+      
       $stderr.puts @queue if $DEBUG
       output = []
       while str = @queue.shift
@@ -82,6 +86,8 @@ module TreeTagger
       @inside_input = false
       str = "#{END_MARKER}\n#{FLUSH_SENTENCE}\n"
       @pipe.print(str)
+      # Here invoke the reader thread to ensure
+      # all output has been read.
     end
     
     private
