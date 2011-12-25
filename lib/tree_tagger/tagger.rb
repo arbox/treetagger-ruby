@@ -33,12 +33,14 @@ module TreeTagger
       @inside_input = false
       @enqueued_tokens = 0
       @mutex = Mutex.new
+      @queue_mutex = Mutex.new
+      # sleep(1) # Don't know if it's useful, no problems before.
     end
 
     # Send the string to the TreeTagger.
     def process(str)
       # Sanitize strings.
-      str = str.strip
+      str = sanitize(str)
       # Mark the beginning of the text.
       if not @inside_input
         str = "#{BEGIN_MARKER}\n#{str}\n"
@@ -57,10 +59,10 @@ module TreeTagger
     # If no more tokens are awaited it returns <nil>.
     def get_output
       output = []
-      
-      tokens = @queue.size
-      tokens.times do
-        output << @queue.shift
+      tokens = 0
+      @queue_mutex.synchronize do
+        tokens = @queue.size
+        tokens.times { output << @queue.shift }
       end
       @mutex.synchronize do
         @enqueued_tokens -= tokens
@@ -102,7 +104,7 @@ module TreeTagger
             $stderr.puts 'Found the end marker.' if $DEBUG
           else
             if @inside_output
-              @queue << line
+              @queue_mutex.synchronize { @queue << line }
               $stderr.puts "<#{line}> added to the queue." if $DEBUG
             end
           end
@@ -115,6 +117,14 @@ module TreeTagger
       IO.popen(@cmdline, 'r+')
     end
 
+    def sanitize(str)
+      line = str.strip
+      if line.size == 0
+        line = '<BLANK />'
+      end
+
+      line
+    end
   end # class
 end # module
 
