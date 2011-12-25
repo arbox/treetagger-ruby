@@ -27,13 +27,16 @@ reader = Thread.new do
         break
       end
     end
+    sleep(0.2) # Is useful!
+
     beginning = false
     result_array.each do |tuple|
       tuple = tuple.split("\t")
+      
       if $stdout.tty?
-        tuple[0].insert(0, red).insert(-1, reset)
-        tuple[1].insert(0, green).insert(-1, reset)
-        tuple[2].insert(0, blue).insert(-1, reset)
+        tuple[0].insert(0, red).insert(-1, reset)   if tuple[0]
+        tuple[1].insert(0, green).insert(-1, reset) if tuple[1]
+        tuple[2].insert(0, blue).insert(-1, reset)  if tuple[2]
       end
       
       # [['token', 'tag', 'lemma'], ['token', 'tag', 'lemma']]`    
@@ -49,4 +52,7 @@ while line = ARGF.gets
 end
 
 tagger.flush
+
+STDOUT.flush
+
 reader.join
