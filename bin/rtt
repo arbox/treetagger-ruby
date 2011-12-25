@@ -8,24 +8,45 @@ options = TreeTagger::ARGVParser.parse(ARGV)
 
 tagger = TreeTagger::Tagger.new(options)
 
-while line = ARGF.gets
-  # [['token', 'tag', 'lemma'], ['token', 'tag', 'lemma']]
-  result_array = tagger.process(line.chomp)
+# Adding some colors to the output.
+# Using ANSI escape codes.
+red   = "\e[31m"
+green = "\e[32m"
+blue  = "\e[34m"
+reset = "\e[0m"
 
-  # Adding some colors to the output.
-  # Using ANSI escape codes.
-  red   = "\e[31m"
-  green = "\e[32m"
-  blue  = "\e[34m"
-  reset = "\e[0m"
-  
-  result_array.each do |tuple|
-    if $stdout.tty?
-      tuple[0].insert(0, red).insert(-1, reset)
-      tuple[1].insert(0, green).insert(-1, reset)
-      tuple[2].insert(0, blue).insert(-1, reset)
+reader = Thread.new do
+  beginning = true
+  loop do
+    result_array = tagger.get_output
+    if result_array.nil?
+      if beginning
+        sleep(0.1)
+        next
+      else
+        break
+      end
     end
-    
-    $stdout.puts tuple.join("\t")
+    beginning = false
+    result_array.each do |tuple|
+      tuple = tuple.split("\t")
+      if $stdout.tty?
+        tuple[0].insert(0, red).insert(-1, reset)
+        tuple[1].insert(0, green).insert(-1, reset)
+        tuple[2].insert(0, blue).insert(-1, reset)
+      end
+      
+      # [['token', 'tag', 'lemma'], ['token', 'tag', 'lemma']]`    
+      $stdout.puts tuple.join("\t")
+    end
   end
 end
+
+# Read all lines from STDOUT or from files.
+while line = ARGF.gets
+  # Invoke tokenizer somehow here.
+  tagger.process(line)
+end
+
+tagger.flush
+reader.join
