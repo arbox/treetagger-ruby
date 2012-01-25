@@ -21,14 +21,24 @@ module TreeTagger
     # The flushing sentence can be shortened down to this size.
     FLUSH_SENTENCE = "Das\nist\nein\nTestsatz\n,\num\ndas\nStossen\nder\nDaten\nsicherzustellen\n."
     ENV['TREETAGGERHOME'] = '/opt/TreeTagger'
-    
-    def initialize(*args)
+    ENV['TREETAGGER_BINARY'] = '/opt/TreeTagger/bin/tree-tagger'
+    ENV['TREETAGGER_MODEL'] = '/opt/TreeTagger/lib/german.par'
+    def initialize(opts = {
+                     :binary => EVN['TREETAGGER_BINARY'],
+                     :model => EVN['TREETAGGER_MODEL'],
+                     :lang => :de,
+                     :blanks => :replace,
+                     :lookup => false,
+                     :lex_file => nil
+                   }
+                   )
       @cmdline = "#{ENV['TREETAGGERHOME']}/bin/tree-tagger " +
         "-token -lemma -sgml -quiet #{ENV['TREETAGGERHOME']}/lib/german.par"
+
       @queue = Queue.new
-      @pipe = create_pipe
+      @pipe = new_pipe
       @pipe.sync = true
-      @reader = start_reader
+      @reader = new_reader
       @inside_output = false
       @inside_input = false
       @enqueued_tokens = 0
@@ -90,7 +100,7 @@ module TreeTagger
     
     private
     # Starts the reader thread.
-    def start_reader
+    def new_reader
       Thread.new do
         while line = @pipe.gets
           # The output strings must not contain "\n".
@@ -113,7 +123,7 @@ module TreeTagger
     end # start_reader
     
     # This method may be utilized to keep the TT process alive.
-    def create_pipe
+    def new_pipe
       IO.popen(@cmdline, 'r+')
     end
 
