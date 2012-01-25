@@ -16,11 +16,13 @@ Simple tagging.
 
 == INSTALLATION
 Before you install the <tt>treetagger-ruby</tt> package please ensure
-you have downloaded and installe the <tt>TreeTagger</tt> itself.
+you have downloaded and installe the
+{TreeTagger}[http://www.ims.uni-stuttgart.de/projekte/corplex/TreeTagger/]
+itself.
 
 The {TreeTagger}[http://www.ims.uni-stuttgart.de/projekte/corplex/TreeTagger/]
 is a copyrighted software by Helmut Schmid and IMC, please read the license
-agreament befor you download the package.
+agreament before you download the package.
 
 After the installation of the <tt>TreeTagger</tt> set the environment variable
 <tt>TREETAGGERHOME</tt> to the location where you have the programm installed.
