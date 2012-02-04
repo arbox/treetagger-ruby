@@ -24,8 +24,8 @@ module TreeTagger
     ENV['TREETAGGER_BINARY'] = '/opt/TreeTagger/bin/tree-tagger'
     ENV['TREETAGGER_MODEL'] = '/opt/TreeTagger/lib/german.par'
     def initialize(opts = {
-                     :binary => EVN['TREETAGGER_BINARY'],
-                     :model => EVN['TREETAGGER_MODEL'],
+                     :binary => ENV['TREETAGGER_BINARY'],
+                     :model => ENV['TREETAGGER_MODEL'],
                      :lang => :de,
                      :blanks => :replace,
                      :lookup => false,
