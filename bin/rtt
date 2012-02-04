@@ -53,6 +53,6 @@ end
 
 tagger.flush
 
-STDOUT.flush
-
 reader.join
+
+STDOUT.flush
