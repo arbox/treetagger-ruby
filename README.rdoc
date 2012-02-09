@@ -33,7 +33,7 @@ For instance you may add the following line to your <tt>.profile</tt> file:
 
 <tt>treetagger-ruby</tt> is provided as a .gem package. Simply install it via
 {RubyGems}[http://rubygems.org/gems/treetagger-ruby].
-To install <tt>treetagger-ruby</tt> ussue the following command:
+To install <tt>treetagger-ruby</tt> issue the following command:
   $ gem install treetagger-ruby
 
 If you want to do a system wide installation, do this as root
@@ -47,7 +47,7 @@ Alternatively use your Gemfile for dependency management.
 Basic usage is very simple:
   $ require 'treetagger-ruby'
   $ tagger = TreeTagger::Tagger.new
-  $ api.process('Ich gehe in die Schule')
+  $ tagger.process('Ich gehe in die Schule')
 
 See documentation in the TreeTagger::Tagger class for details
 on particular search methods.
