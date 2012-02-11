@@ -38,15 +38,27 @@ you have downloaded and installed the
 itself.
 
 The {TreeTagger}[http://www.ims.uni-stuttgart.de/projekte/corplex/TreeTagger/]
-is a copyrighted software by Helmut Schmid and IMC, please read the license
+is a copyrighted software by Helmut Schmid and
+{IMS}[http://www.ims.uni-stuttgart.de/], please read the license
 agreament before you download the TreeTagger package and language models.
 
 After the installation of the <tt>TreeTagger</tt> set the environment variable
-<tt>TREETAGGERHOME</tt> to the location where you have the programm installed.
-Usually this directory contains subdirectories <tt>bin, cmd, lib</tt> and
-<tt>doc</tt>.
-For instance you may add the following line to your <tt>.profile</tt> file:
-  export TREETAGGERHOME='/path/to/your/TreeTagger/installation'
+<tt>TREETAGGER_BINARY</tt> to the location where the binary <tt>tree-tagger</tt>
+resides. Usually this binary is located under the <tt>bin</tt> directory in the
+main installation directory of the <tt>TreeTagger</tt>.
+
+Also you have to set the variable <tt>TREETAGGER_MODEL</tt> to the location of
+the appropriate language model you have acquired in the training step.
+
+For instance you may add the following lines to your <tt>.profile</tt> file:
+  export TREETAGGER_BINARY='/path/to/your/TreeTagger/bin/tree-tagger'
+  export TREETAGGER_MODEL='/path/to/your/TreeTagger/lib/german.par'
+
+It is convinient to work with a default language model, but you can change
+it every time during the instantiation of a new tagger instance.
+
+If you want to feed a lexicon file into your tagger you can do it globally
+through the environment variable <tt>TREETAGGER_LEXICON</tt>.
 
 <tt>treetagger-ruby</tt> is provided as a .gem package. Simply install it via
 {RubyGems}[http://rubygems.org/gems/treetagger-ruby].
