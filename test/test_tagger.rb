@@ -45,7 +45,7 @@ class TestTagger < Test::Unit::TestCase
   end
 
   # It should instantiate a tagger instance only with valid options.
-  def test_for_binary_presense
+  def test_for_binary_presence
     ENV.delete('TREETAGGER_BINARY')
     assert_raise(TreeTagger::UserError) do
       TreeTagger::Tagger.new
@@ -53,7 +53,7 @@ class TestTagger < Test::Unit::TestCase
   end
 
   # It should instantiate a tagger instance only with valid options.
-  def test_for_model_presense
+  def test_for_model_presence
     ENV.delete('TREETAGGER_MODEL')
     assert_raise(TreeTagger::UserError) do
       TreeTagger::Tagger.new
@@ -62,7 +62,7 @@ class TestTagger < Test::Unit::TestCase
   end
 
   # It should instantiate a tagger instance only with valid options.
-  def test_for_lexicon_presense
+  def test_for_lexicon_presence
     ENV.delete('TREETAGGER_LEXICON')
     assert_raise(TreeTagger::UserError) do
       TreeTagger::Tagger.new
