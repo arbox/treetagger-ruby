@@ -33,10 +33,9 @@ module TreeTagger
                      :options => '-token -lemma -sgml -quiet',
                      :blanks => :replace,
                      :lookup => false
-                   }
-                   )
+                   })
 
-      @opts = opts
+      @opts = validated_options(opts)
       @cmdline = "#{@opts[:binary]} #{@opts[:options]} #{#opts[:model]}"
 
       @queue = Queue.new
@@ -103,6 +102,17 @@ module TreeTagger
     end
     
     private
+    # Return the options hash after validation.
+    def validated_options(opts)
+      [:binary, :model, :lexicon].each do |key|
+        if opts[key].nil?
+          opts[key] = ENV.fetch("TREETAGGER_#{key.to_s.upcase}") do |missing|
+            fail UserError, "Set the environment variable <#{missing}>!"
+          end
+        end
+      end
+      opts
+    end
     # Starts the reader thread.
     def new_reader
       Thread.new do
