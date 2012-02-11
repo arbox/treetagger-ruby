@@ -127,6 +127,7 @@ module TreeTagger
     end # start_reader
     
     # This method may be utilized to keep the TT process alive.
+    # Check here if TT returns the exit code 1 in case on invalide options.
     def new_pipe
       IO.popen(@cmdline, 'r+')
     end
