@@ -22,9 +22,9 @@ module TreeTagger
     # The flushing sentence can be shortened down to this size.
     FLUSH_SENTENCE = "Das\nist\nein\nTestsatz\n,\num\ndas\nStossen\nder\nDaten\nsicherzustellen\n."
     #    ENV['TREETAGGERHOME'] = '/opt/TreeTagger'
-    #    ENV['TREETAGGER_BINARY'] = '/opt/TreeTagger/bin/tree-tagger'
-    #    ENV['TREETAGGER_MODEL'] = '/opt/TreeTagger/lib/german.par'
-    #    ENV['TREETAGGER_LEXICON'] = '/opt/TreeTagger/lib/german-lexicon.txt'
+#    ENV['TREETAGGER_BINARY'] = '/opt/TreeTagger/bin/tree-tagger'
+#    ENV['TREETAGGER_MODEL'] = '/opt/TreeTagger/lib/german.par'
+#    ENV['TREETAGGER_LEXICON'] = '/opt/TreeTagger/lib/german-lexicon.txt'
     
     def initialize(opts = {
                      :binary => nil,

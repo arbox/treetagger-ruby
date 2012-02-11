@@ -10,8 +10,12 @@ class TestTagger < Test::Unit::TestCase
                     :flush
                    ]
   def setup
+    ENV['TREETAGGER_BINARY'] = '/opt/TreeTagger/bin/tree-tagger'
+    ENV['TREETAGGER_MODEL'] = '/opt/TreeTagger/lib/german.par'
+    ENV['TREETAGGER_LEXICON'] = '/opt/TreeTagger/lib/german-lexicon.txt'
+    
     params = {} # dummy for now
-    @tagger = TreeTagger::Tagger.new(params)
+    @tagger = TreeTagger::Tagger.new
   end
   
   def teardown
@@ -37,6 +41,31 @@ class TestTagger < Test::Unit::TestCase
       assert_raise(TreeTagger::UserError) do
         @tagger.process(input)
       end
+    end
+  end
+
+  # It should instantiate a tagger instance only with valid options.
+  def test_for_binary_presense
+    ENV.delete('TREETAGGER_BINARY')
+    assert_raise(TreeTagger::UserError) do
+      TreeTagger::Tagger.new
+    end
+  end
+
+  # It should instantiate a tagger instance only with valid options.
+  def test_for_model_presense
+    ENV.delete('TREETAGGER_MODEL')
+    assert_raise(TreeTagger::UserError) do
+      TreeTagger::Tagger.new
+    end
+
+  end
+
+  # It should instantiate a tagger instance only with valid options.
+  def test_for_lexicon_presense
+    ENV.delete('TREETAGGER_LEXICON')
+    assert_raise(TreeTagger::UserError) do
+      TreeTagger::Tagger.new
     end
   end
 
