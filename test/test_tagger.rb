@@ -1,5 +1,6 @@
 require 'test/unit'
 require 'tree_tagger/tagger'
+require 'tree_tagger/error'
 require 'stringio'
 
 class TestTagger < Test::Unit::TestCase
@@ -28,5 +29,14 @@ class TestTagger < Test::Unit::TestCase
   end
 
   def test_tagger
+  end
+
+  # It should accept only valid input.
+  def test_input_validity
+    [[], {}, :input, [:one, :two]].each do |input|
+      assert_raise(TreeTagger::UserError) do
+        @tagger.process(input)
+      end
+    end
   end
 end
