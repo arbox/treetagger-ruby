@@ -23,17 +23,21 @@ module TreeTagger
     ENV['TREETAGGERHOME'] = '/opt/TreeTagger'
     ENV['TREETAGGER_BINARY'] = '/opt/TreeTagger/bin/tree-tagger'
     ENV['TREETAGGER_MODEL'] = '/opt/TreeTagger/lib/german.par'
+    ENV['TREETAGGER_LEXICON'] = '/opt/TreeTagger/lib/german-lexicon.txt'
+    
     def initialize(opts = {
-                     :binary => ENV['TREETAGGER_BINARY'],
-                     :model => ENV['TREETAGGER_MODEL'],
+                     :binary => nil,
+                     :model => nil,
+                     :lexicon => nil,
                      :lang => :de,
+                     :options => '-token -lemma -sgml -quiet',
                      :blanks => :replace,
-                     :lookup => false,
-                     :lex_file => nil
+                     :lookup => false
                    }
                    )
-      @cmdline = "#{ENV['TREETAGGERHOME']}/bin/tree-tagger " +
-        "-token -lemma -sgml -quiet #{ENV['TREETAGGERHOME']}/lib/german.par"
+
+      @opts = opts
+      @cmdline = "#{@opts[:binary]} #{@opts[:options]} #{#opts[:model]}"
 
       @queue = Queue.new
       @pipe = new_pipe
