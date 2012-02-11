@@ -33,10 +33,11 @@ class TestTagger < Test::Unit::TestCase
 
   # It should accept only valid input.
   def test_input_validity
-    [[], {}, :input, [:one, :two]].each do |input|
+    ['', [], {}, :input, [:one, :two]].each do |input|
       assert_raise(TreeTagger::UserError) do
         @tagger.process(input)
       end
     end
   end
+
 end
