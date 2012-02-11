@@ -1,28 +1,45 @@
 = TreeTagger for Ruby
 
 * {RubyGems}[http://rubygems.org/gems/treetagger-ruby]
-* Developers {Homepage}[http://bu.chsta.be/]
+* {Homepage}[http://bu.chsta.be/]
 * {RTT Project Page}[http://bu.chsta.be/projects/treetagger-ruby/]
 * {Source Code}[https://github.com/arbox/treetagger-ruby]
 * {Bug Tracker}[https://github.com/arbox/treetagger-ruby/issues]
 
 == DESCRIPTION
-The Ruby based wrapper for the TreeTagger by Helmut Schmid.
-Check it out if you are interested
-in Natural Language Processing (NLP) and Human Language Technology (HLT).
+A Ruby based wrapper for the TreeTagger by Helmut Schmid.
+
+Check it out if you are interested in Natural Language Processing (NLP)
+and/or Human Language Technology (HLT).
+
+This library provides comprehensive bindings for the
+{TreeTagger}[http://www.ims.uni-stuttgart.de/projekte/corplex/TreeTagger/],
+a statistical language independed POS tagging and chunking software.
+
+TreeTagger is language agnostic, it will never guess what language you're going
+to use.
+
+TODO:
+* References to Schmid's publications;
+* How to use TreeTagger in the wild;
+* Input and output format, tokenization;
+* ...
+
 === Implemented Features
 Simple tagging.
 
+Please have a look at the CHANGELOG file for details on implemented and planned
+features. 
 
 == INSTALLATION
 Before you install the <tt>treetagger-ruby</tt> package please ensure
-you have downloaded and installe the
+you have downloaded and installed the
 {TreeTagger}[http://www.ims.uni-stuttgart.de/projekte/corplex/TreeTagger/]
 itself.
 
 The {TreeTagger}[http://www.ims.uni-stuttgart.de/projekte/corplex/TreeTagger/]
 is a copyrighted software by Helmut Schmid and IMC, please read the license
-agreament before you download the package.
+agreament before you download the TreeTagger package and language models.
 
 After the installation of the <tt>TreeTagger</tt> set the environment variable
 <tt>TREETAGGERHOME</tt> to the location where you have the programm installed.
@@ -46,11 +63,17 @@ Alternatively use your Gemfile for dependency management.
 
 Basic usage is very simple:
   $ require 'treetagger-ruby'
+  $ # Instantiate a tagger instance with default values.
   $ tagger = TreeTagger::Tagger.new
-  $ tagger.process('Ich gehe in die Schule')
+  $ # Process an array of tokens.
+  $ tagger.process(%w{Ich gehe in die Schule})
+  $ # Flush the pipeline.
+  $ tagger.flush
+  $ # Get the processed data.
+  $ tagger.get_output
 
 See documentation in the TreeTagger::Tagger class for details
-on particular search methods.
+on particular methods.
 
 == EXCEPTION HIERARCHY
 While using TreeTagger you can face following errors:

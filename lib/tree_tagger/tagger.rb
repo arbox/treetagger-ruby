@@ -24,17 +24,20 @@ module TreeTagger
     ENV['TREETAGGERHOME'] = '/opt/TreeTagger'
     ENV['TREETAGGER_BINARY'] = '/opt/TreeTagger/bin/tree-tagger'
     ENV['TREETAGGER_MODEL'] = '/opt/TreeTagger/lib/german.par'
+    ENV['TREETAGGER_LEXICON'] = '/opt/TreeTagger/lib/german-lexicon.txt'
+    
     def initialize(opts = {
-                     :binary => ENV['TREETAGGER_BINARY'],
-                     :model => ENV['TREETAGGER_MODEL'],
+                     :binary => nil,
+                     :model => nil,
+                     :lexicon => nil,
                      :lang => :de,
+                     :options => '-token -lemma -sgml -quiet',
                      :blanks => :replace,
-                     :lookup => false,
-                     :lex_file => nil
-                   }
-                   )
-      @cmdline = "#{ENV['TREETAGGERHOME']}/bin/tree-tagger " +
-        "-token -lemma -sgml -quiet #{ENV['TREETAGGERHOME']}/lib/german.par"
+                     :lookup => false
+                   })
+
+      @opts = validated_options(opts)
+      @cmdline = "#{@opts[:binary]} #{@opts[:options]} #{#opts[:model]}"
 
       @queue = Queue.new
       @pipe = new_pipe
@@ -102,6 +105,17 @@ module TreeTagger
     end
     
     private
+    # Return the options hash after validation.
+    def validated_options(opts)
+      [:binary, :model, :lexicon].each do |key|
+        if opts[key].nil?
+          opts[key] = ENV.fetch("TREETAGGER_#{key.to_s.upcase}") do |missing|
+            fail UserError, "Set the environment variable <#{missing}>!"
+          end
+        end
+      end
+      opts
+    end
     # Starts the reader thread.
     def new_reader
       Thread.new do
@@ -126,6 +140,7 @@ module TreeTagger
     end # start_reader
     
     # This method may be utilized to keep the TT process alive.
+    # Check here if TT returns the exit code 1 in case on invalide options.
     def new_pipe
       IO.popen(@cmdline, 'r+')
     end
