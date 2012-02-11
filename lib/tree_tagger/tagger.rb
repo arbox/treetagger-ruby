@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 require 'thread'
+require 'tree_tagger/error'
 
 =begin
 TODO:
@@ -48,7 +49,9 @@ module TreeTagger
     end
 
     # Send the string to the TreeTagger.
-    def process(str)
+    def process(input)
+
+      str = convert(input)
       # Sanitize strings.
       str = sanitize(str)
       # Mark the beginning of the text.
@@ -127,6 +130,28 @@ module TreeTagger
       IO.popen(@cmdline, 'r+')
     end
 
+    # Convert token arrays to delimited strings.
+    def convert(input)
+      unless input.is_a?(Array) || input.is_a?(String)
+        fail UserError, "Not a valid input format: <#{input.class}>!"
+      end
+
+      if input.empty?
+        fail UserError, "Empty input is not allowed!"
+      end
+      
+      if input.is_a?(Array)
+        input.each do |el|
+          unless el.is_a?(String)
+            fail UserError, "Input elements should be strings!"
+          end
+        end
+        input = input.join("\n")
+      end
+      
+      input
+    end
+    
     def sanitize(str)
       line = str.strip
       if line.size == 0
