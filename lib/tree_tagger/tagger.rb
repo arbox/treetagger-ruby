@@ -21,10 +21,10 @@ module TreeTagger
     # TT seems to hold only the last three tokens in the buffer.
     # The flushing sentence can be shortened down to this size.
     FLUSH_SENTENCE = "Das\nist\nein\nTestsatz\n,\num\ndas\nStossen\nder\nDaten\nsicherzustellen\n."
-    ENV['TREETAGGERHOME'] = '/opt/TreeTagger'
-    ENV['TREETAGGER_BINARY'] = '/opt/TreeTagger/bin/tree-tagger'
-    ENV['TREETAGGER_MODEL'] = '/opt/TreeTagger/lib/german.par'
-    ENV['TREETAGGER_LEXICON'] = '/opt/TreeTagger/lib/german-lexicon.txt'
+    #    ENV['TREETAGGERHOME'] = '/opt/TreeTagger'
+#    ENV['TREETAGGER_BINARY'] = '/opt/TreeTagger/bin/tree-tagger'
+#    ENV['TREETAGGER_MODEL'] = '/opt/TreeTagger/lib/german.par'
+#    ENV['TREETAGGER_LEXICON'] = '/opt/TreeTagger/lib/german-lexicon.txt'
     
     def initialize(opts = {
                      :binary => nil,
@@ -34,10 +34,11 @@ module TreeTagger
                      :options => '-token -lemma -sgml -quiet',
                      :blanks => :replace,
                      :lookup => false
-                   })
+                   }
+                   )
 
       @opts = validated_options(opts)
-      @cmdline = "#{@opts[:binary]} #{@opts[:options]} #{#opts[:model]}"
+      @cmdline = "#{@opts[:binary]} #{@opts[:options]} #{@opts[:model]}"
 
       @queue = Queue.new
       @pipe = new_pipe
@@ -110,12 +111,15 @@ module TreeTagger
       [:binary, :model, :lexicon].each do |key|
         if opts[key].nil?
           opts[key] = ENV.fetch("TREETAGGER_#{key.to_s.upcase}") do |missing|
-            fail UserError, "Set the environment variable <#{missing}>!"
+            fail UserError, "Provide a value for <:#{key}>" +
+              " or set the environment variable <#{missing}>!"
           end
         end
       end
+
       opts
     end
+    
     # Starts the reader thread.
     def new_reader
       Thread.new do
