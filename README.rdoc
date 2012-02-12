@@ -24,6 +24,7 @@ TODO:
 * How to use TreeTagger in the wild;
 * Input and output format, tokenization;
 * ...
+* The actual german parameter file has been estimated on one byte encoded data.
 
 === Implemented Features
 Simple tagging.
