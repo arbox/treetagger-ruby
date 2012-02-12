@@ -17,7 +17,7 @@ This library provides comprehensive bindings for the
 a statistical language independed POS tagging and chunking software.
 
 TreeTagger is language agnostic, it will never guess what language you're going
-to use.
+to use. It 
 
 TODO:
 * References to Schmid's publications;
@@ -73,7 +73,7 @@ Alternatively use your Gemfile for dependency management.
 
 
 == SYNOPSIS
-
+=== Basic Usage
 Basic usage is very simple:
   $ require 'treetagger-ruby'
   $ # Instantiate a tagger instance with default values.
@@ -84,6 +84,52 @@ Basic usage is very simple:
   $ tagger.flush
   $ # Get the processed data.
   $ tagger.get_output
+
+=== Input Format
+Basically you have to provide a tokenized sequence with possibly some additional
+information on lexical classes of tokens and on their probabilities. Every token
+has to be on a separate line. Due to technical limitations SGML tags
+(i.e. sequences with heading < and trailing >) cannot be valid tokes since
+they are used internally for delimiting meaningful content from flush tokens.
+In implies the use of the <tt>-sgml</tt> option which cannot be changes by user.
+It is a limitation of <em>this</em> library. If you do need to process tags,
+fall back and use the TreeTagger as a standalone programm possibly employing
+temp files to store your input and output. This behaviour will be also
+implemented in futher versions of <tt>treetagger-ruby</tt>.
+
+Every token may occure alone on the line or be followed by additional
+information:
+* token;
+* token (\\tab tag)+;
+* token (\\tab tag \\space lemma)+;
+* token (\\tab tag \\space probability)+;
+* token (\\tab tag \\space probability \\space lemma)+.
+
+You input may look like the following sentence:
+  Die     ART 0.99
+  neuen   ADJA neu
+  Hunde  NN NP
+  stehen  VVFIN 0.99 stehen
+  an
+  den
+  Mauern  NN Mauer
+  .
+
+
+This wrapper accepts the input as <em>String</em> or <em>Array</em>.
+
+If you want to use strings, you are responsible for the proper delimiters inside
+the string: <tt>"Die\\tART 0.99\\nneuen\\tADJA neu\\nHunde\\tNN NP\\nstehen\\t
+VVFIN 0.99 stehen\\nan\\nden\\nMauern\\tNN Mauer\\n.\\n"</tt>
+Now <tt>treetagger-ruby</tt> does not check your markup for correctness and will
+possibly report a <tt>TreeTagger::ExternalError</tt> if the TreeTagger process
+die due to input errors.
+
+Using arrays is more convinient since they can be built programmatically.
+
+
+=== Output Format
+[]
 
 See documentation in the TreeTagger::Tagger class for details
 on particular methods.
@@ -97,6 +143,8 @@ While using TreeTagger you can face following errors:
 == SUPPORT
 If you have question, bug reports or any suggestions, please drop me an email :) 
 Any help is deeply appreciated!
+
+== HOW TO CONTRIBUTE
 
 == CHANGELOG
 For details on future plan and working progress see CHANGELOG.
