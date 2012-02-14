@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 
+ARGV.clear
 while gets
   puts $_
 end
 
-STDOUT.flush
+#STDOUT.flush
