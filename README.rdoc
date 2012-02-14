@@ -127,9 +127,31 @@ die due to input errors.
 
 Using arrays is more convinient since they can be built programmatically.
 
+Arrays should have the following structure:
+* ['token', 'token', 'token'];
+* ['token', ['token', ['POS', 'lemma'], ['POS', 'lemma']], 'token'];
+* ['token', ['token', ['POS', prob], ['POS', 'prob']], 'token'];
+* ['token', ['token', ['POS', prob, 'lemma'], ['POS', 'prob', 'lemma']]].
+
+It is internally converted in the sequence <tt>token\\ntoken\\tPOS lemma\\t
+POS lemma\\ntoken\\n</tt>, i.e. in the enriched version alternatives are
+tab separated and entries a blank separated.
+
+Note that probabilities may be strings or integers.
+
+The lexicon lookup is +not+ implemented for now, that's the latter three forms
+of input arrays are not supported yet.
 
 === Output Format
-[]
+For now you'll get an array with strings elements. However the precise string
+structure depends on the cmd arguments you've provided during the tagger
+instantiation.
+
+For instanse for the input <tt>["Veruntreute", "die", "AWO", "Spendengeld", "?"]
+</tt> you'll get the following output with default cmd argumetns:
+
+<tt>["Veruntreute\tNN\tVeruntreute", "die\tART\td", "AWO\tNN\t<unknown>",
+"Spendengeld\tNN\tSpendengeld", "?\t$.\t?"]</tt>
 
 See documentation in the TreeTagger::Tagger class for details
 on particular methods.
@@ -140,12 +162,23 @@ While using TreeTagger you can face following errors:
 * <tt>TreeTagger::RuntimeError</tt>;
 * <tt>TreeTagger::ExternalError</tt>.
 
+This three kinds of errors all subclass <tt>TreeTagger::Error</tt>, which
+in turn is a subclass of <tt>StandardError</tt>. For an end user this means that
+it is possible to intercept all errors from <em>treetagger-ruby</em> with
+a simple <tt>rescue</tt> clause.
+
 == SUPPORT
-If you have question, bug reports or any suggestions, please drop me an email :) 
-Any help is deeply appreciated!
+If you have question, bug reports or any suggestions, please drop me an email :)
 
 == HOW TO CONTRIBUTE
+Please contact me and suggest your ideas, report bugs, talk to me, if you want
+to implement some features in the future releases of this library.
 
+Please don't feel offended if I cannot accept all your pull requests, I have
+to review them and find the appropriate time and place in the code base to
+incorporate your valuable changes.
+
+Any help is deeply appreciated!
 == CHANGELOG
 For details on future plan and working progress see CHANGELOG.
 
