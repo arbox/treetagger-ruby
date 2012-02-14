@@ -8,7 +8,6 @@ TODO:
 - Control the status of the pipe and recreate it.
 - Handle IO errors.
 - Handle errors while allocating the TT object.
-- Language specific options.
 - Update the flush sentence, make it shorter.
 - Store the queue on a persistant medium, not in the memory.
 - Properly set the $ORS for all platforms.
@@ -20,8 +19,8 @@ module TreeTagger
   # Class comment
   class Tagger
 
-    BEGIN_MARKER = '<BEGIN_OF_THE_TT_INPUT />'
-    END_MARKER   = '<END_OF_THE_TT_INPUT />'
+    BEGIN_MARKER = '<BEGIN_OF_THE_TT_INPUT>'
+    END_MARKER   = '<END_OF_THE_TT_INPUT>'
     # TT seems to hold only the last three tokens in the buffer.
     # The flushing sentence can be shortened down to this size.
     FLUSH_SENTENCE = "Das\nist\nein\nTestsatz\n,\num\ndas\nStossen\nder\nDaten\nsicherzustellen\n."
@@ -35,14 +34,14 @@ module TreeTagger
                      :binary => nil,
                      :model => nil,
                      :lexicon => nil,
-                     :lang => :de,
                      :options => '-token -lemma -sgml -quiet',
-                     :blanks => :replace,
+                     :replace_blanks => true,
+                     :blank_tag => '<BLANK>'
                      :lookup => false
                    }
                    )
 
-      @opts = validated_options(opts)
+      @opts = validate_options(opts)
       @cmdline = "#{@opts[:binary]} #{@opts[:options]} #{@opts[:model]}"
 
       @queue = Queue.new
@@ -112,13 +111,40 @@ module TreeTagger
     
     private
     # Return the options hash after validation.
-    def validated_options(opts)
-      [:binary, :model, :lexicon].each do |key|
+    #  {
+    #    :binary => nil,
+    #    :model => nil,
+    #    :lexicon => nil,
+    #    :options => '-token -lemma -sgml -quiet',
+    #    :replace_blanks => true,
+    #    :lookup => false
+    #  }
+    def validate_options(opts)
+      # Check if <:lookup> is boolean.
+
+      # Check if <:replace_blanks> is boolean.
+
+      # Check if <:options> is a string.
+
+      # Check if <:options> contains only allowed values.
+
+      # Ensure that <:options> contains <-sgml>.
+      
+      # Set the model and binary paths if not provided.
+      [:binary, :model].each do |key|
         if opts[key].nil?
           opts[key] = ENV.fetch("TREETAGGER_#{key.to_s.upcase}") do |missing|
             fail UserError, "Provide a value for <:#{key}>" +
               " or set the environment variable <#{missing}>!"
           end
+        end
+      end
+      
+      # Set the lexicon path if not provided but requested.
+      if opts[:lookup] && opts[:lexicon].nil?
+        opts[:lookup] = ENV.fetch('TREETAGGER_LEXICON') do |missing|
+          fail UserError, 'Provide a value for <:lexicon>' +
+            ' or set the environment variable <TREETAGGER_LEXICON>!'
         end
       end
 
