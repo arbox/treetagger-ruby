@@ -10,9 +10,13 @@ class TestTagger < Test::Unit::TestCase
                     :flush
                    ]
   def setup
-    ENV['TREETAGGER_BINARY'] = '/opt/TreeTagger/bin/tree-tagger'
-    ENV['TREETAGGER_MODEL'] = '/opt/TreeTagger/lib/german.par'
-    ENV['TREETAGGER_LEXICON'] = '/opt/TreeTagger/lib/german-lexicon.txt'
+#    ENV['TREETAGGER_BINARY'] = '/opt/TreeTagger/bin/tree-tagger'
+#    ENV['TREETAGGER_MODEL'] = '/opt/TreeTagger/lib/german.par'
+#    ENV['TREETAGGER_LEXICON'] = '/opt/TreeTagger/lib/german-lexicon.txt'
+
+    ENV['TREETAGGER_BINARY'] = 'test/tree-tagger/tree-tagger'
+    ENV['TREETAGGER_MODEL'] = 'test/tree-tagger/model_file.par'
+    ENV['TREETAGGER_LEXICON'] = 'test/tree-tagger/lexicon_file.txt'
     
     params = {} # dummy for now
     @tagger = TreeTagger::Tagger.new
@@ -105,4 +109,46 @@ class TestTagger < Test::Unit::TestCase
     end
   end
 
+  # It should reject a non-boolean value for <:lookup>.
+  def test_rejecting_lookup_values
+    assert_raise(TreeTagger::UserError) do
+      TreeTagger::Tagger.new({:lookup => 'true', :options => '-quiet'})
+    end
+  end
+
+  # It should reject a non-boolean value for <:replace_blanks>.
+  def test_rejecting_blank_values
+    assert_raise(TreeTagger::UserError) do
+      TreeTagger::Tagger.new({:replace_blanks => 'true'})
+    end
+  end
+
+  # It should reject a non-string value for <:options>.
+  def test_rejecting_option_values
+    assert_raise(TreeTagger::UserError) do
+      TreeTagger::Tagger.new({:options => :quiet})
+    end
+  end
+
+  # It should reject invalid options for TreeTagger inside <:options>.
+  def test_rejecting_invalid_arguments
+    flunk 'Not implemented yet!'
+  end
+
+  # It should ensure the presense of the <-sgml> argument.
+  def test_presence_of_sgml_argument
+    flunk 'Not implemented yet!'
+  end
+
+  # It should reject a non-string value for <:blank_tag>.
+  def test_rejecting_blanktag_values
+    assert_raise(TreeTagger::UserError) do
+      TreeTagger::Tagger.new({:blank_tag => :blank})
+    end
+  end
+
+  # It should ensure that <:blang_tag> is a valid smgl sequence.
+  def test_sgml_form
+    flunk 'Not implemented yet!'
+  end
 end
