@@ -13,7 +13,11 @@ TODO:
 - Store the queue on a persistant medium, not in the memory.
 - Properly set the $ORS for all platforms.
 =end
+# :main: README.rdoc
+# :title: TreeTagger - Ruby based Wrapper for the TreeTagger by Helmut Schmid
+# Module comment
 module TreeTagger
+  # Class comment
   class Tagger
 
     BEGIN_MARKER = '<BEGIN_OF_THE_TT_INPUT />'
@@ -26,6 +30,7 @@ module TreeTagger
 #    ENV['TREETAGGER_MODEL'] = '/opt/TreeTagger/lib/german.par'
 #    ENV['TREETAGGER_LEXICON'] = '/opt/TreeTagger/lib/german-lexicon.txt'
     
+    # Initializer commet
     def initialize(opts = {
                      :binary => nil,
                      :model => nil,

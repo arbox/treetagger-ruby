@@ -91,7 +91,7 @@ information on lexical classes of tokens and on their probabilities. Every token
 has to be on a separate line. Due to technical limitations SGML tags
 (i.e. sequences with heading < and trailing >) cannot be valid tokes since
 they are used internally for delimiting meaningful content from flush tokens.
-In implies the use of the <tt>-sgml</tt> option which cannot be changes by user.
+It implies the use of the <tt>-sgml</tt> option which cannot be changes by user.
 It is a limitation of <em>this</em> library. If you do need to process tags,
 fall back and use the TreeTagger as a standalone programm possibly employing
 temp files to store your input and output. This behaviour will be also
