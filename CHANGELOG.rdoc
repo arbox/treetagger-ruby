@@ -1,12 +1,17 @@
 == COMPLETED
+=== 0.1.0
+The inteface is now clear and stable.
+
+Tagging of big texts is possible since the TreeTagger is invoked as an
+external process through a pipe.
+
+Test suite improved.
 === 0.0.1
 Implemented simple tagging. The TreeTagger is invoked through the evn variable.
 === 0.0.1.prealpha
 Created the structure for this project, added documentation and a public repo.
 
 == PLANNED
-=== 0.1.0
-
 === 0.2.0
 === 0.3.0
 === 0.4.0
