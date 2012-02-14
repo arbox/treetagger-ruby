@@ -101,7 +101,7 @@ class TestTagger < Test::Unit::TestCase
   def test_for_lexicon_presence
     ENV.delete('TREETAGGER_LEXICON')
     assert_raise(TreeTagger::UserError) do
-      TreeTagger::Tagger.new
+      TreeTagger::Tagger.new({:lookup => true, :options => '-quiet -sgml'})
     end
   end
 
