@@ -118,6 +118,7 @@ module TreeTagger
     #    :lexicon => nil,
     #    :options => '-token -lemma -sgml -quiet',
     #    :replace_blanks => true,
+    #    :blank_tag => '<BLANK>',
     #    :lookup => false
     #  }
     def validate_options(opts)
@@ -130,6 +131,10 @@ module TreeTagger
       # Check if <:options> contains only allowed values.
 
       # Ensure that <:options> contains <-sgml>.
+
+      # Check if <:blank_tag> is a string.
+
+      # Ensure that <:blank_tag> is a valid SGML sequence.
       
       # Set the model and binary paths if not provided.
       [:binary, :model].each do |key|
@@ -149,6 +154,11 @@ module TreeTagger
         end
       end
 
+      # Check for existence and reedability of external files:
+      # * binary;
+      # * model;
+      # * lexicon (if applicable).
+      
       opts
     end
     
