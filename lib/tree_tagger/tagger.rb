@@ -36,12 +36,13 @@ module TreeTagger
                      :lexicon => nil,
                      :options => '-token -lemma -sgml -quiet',
                      :replace_blanks => true,
-                     :blank_tag => '<BLANK>'
+                     :blank_tag => '<BLANK>',
                      :lookup => false
                    }
                    )
 
       @opts = validate_options(opts)
+      @blank_tag = @opts[:blank_tag]
       @cmdline = "#{@opts[:binary]} #{@opts[:options]} #{@opts[:model]}"
 
       @queue = Queue.new
@@ -204,8 +205,8 @@ module TreeTagger
     
     def sanitize(str)
       line = str.strip
-      if line.size == 0
-        line = '<BLANK />'
+      if line.empty?
+        line = @blank_tag
       end
 
       line
