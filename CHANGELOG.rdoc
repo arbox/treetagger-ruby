@@ -13,10 +13,15 @@ Created the structure for this project, added documentation and a public repo.
 
 == PLANNED
 === 0.2.0
+Better tests. Support for all input types.
 === 0.3.0
+Lemmatizer.
 === 0.4.0
+File based FIFOs.
 === 0.5.0
+File based queues.
 === 0.6.0
+Full featured cmd interface.
 === 0.7.0
 === 0.8.0
 === 0.9.0
