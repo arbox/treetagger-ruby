@@ -34,7 +34,43 @@ class TestTagger < Test::Unit::TestCase
 
   def test_tagger
   end
+  
+  # It should accept only arrays and strings.
+  def test_input_for_its_class
+    assert_nothing_raised do
+      @tagger.process 'Ich\ngehe\nin\ndie\nSchule\n.\n'
+      @tagger.process %w{Ich gehe in die Schule .}
+    end
+  end
 
+  # It should reject non-string and non-array elements.
+  def test_rejecting_invalid_input
+    [{}, :input, 1, 1.0, Time.new].each do |input|
+      assert_raise(TreeTagger::UserError) do
+        @tagger.process(input)
+      end
+    end
+  end
+  
+  # It should reject empty input.
+  def test_for_empty_input
+    ['', []].each do |input|
+      assert_raise(TreeTagger::UserError) do
+        @tagger.process(input)
+      end
+    end
+  end
+
+  # It should reject arrays with wrong elements.
+  def test_for_elements_of_arrays
+    
+  end
+  
+  # It should accept valid input.
+  def test_accepting_vaild_input
+    input = ''
+  end
+  
   # It should accept only valid input.
   def test_input_validity
     ['', [], {}, :input, [:one, :two]].each do |input|
