@@ -202,6 +202,7 @@ module TreeTagger
           unless el.is_a?(String)
             fail UserError, "Input elements should be strings!"
           end
+          el = sanitize(el)
         end
         input = input.join("\n")
       end
