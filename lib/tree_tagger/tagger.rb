@@ -25,7 +25,7 @@ module TreeTagger
     # The flushing sentence can be shortened down to this size.
     FLUSH_SENTENCE = "Das\nist\nein\nTestsatz\n,\num\ndas\nStossen\nder\nDaten\nsicherzustellen\n."
     
-    # Initializer commet
+    # Initializer comment
     def initialize(opts = {
                      :binary => nil,
                      :model => nil,
