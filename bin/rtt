@@ -10,10 +10,10 @@ tagger = TreeTagger::Tagger.new(options)
 
 # Adding some colors to the output.
 # Using ANSI escape codes.
-red   = "\e[31m"
-green = "\e[32m"
-blue  = "\e[34m"
-reset = "\e[0m"
+RED   = "\e[31m"
+GREEN = "\e[32m"
+BLUE  = "\e[34m"
+RESET = "\e[0m"
 
 reader = Thread.new do
   beginning = true
@@ -34,20 +34,21 @@ reader = Thread.new do
       tuple = tuple.split("\t")
       
       if $stdout.tty?
-        tuple[0].insert(0, red).insert(-1, reset)   if tuple[0]
-        tuple[1].insert(0, green).insert(-1, reset) if tuple[1]
-        tuple[2].insert(0, blue).insert(-1, reset)  if tuple[2]
+        tuple[0].insert(0, RED).insert(-1, RESET)   if tuple[0]
+        tuple[1].insert(0, GREEN).insert(-1, RESET) if tuple[1]
+        tuple[2].insert(0, BLUE).insert(-1, RESET)  if tuple[2]
       end
       
       # [['token', 'tag', 'lemma'], ['token', 'tag', 'lemma']]`    
       $stdout.puts tuple.join("\t")
     end
-  end
+  end # loop end
 end
 
 # Read all lines from STDOUT or from files.
 while line = ARGF.gets
   # Invoke tokenizer somehow here.
+  puts line
   tagger.process(line)
 end
 
