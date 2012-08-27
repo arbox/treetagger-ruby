@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-printf "Ich\ngehe\nin\n \ndie\nSchule\n." | ruby -I lib bin/rtt
+printf "Ich\ngehe\nin\ndie\nSchule\n.\n" | ruby -I lib bin/rtt
