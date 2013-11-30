@@ -1,10 +1,12 @@
 = TreeTagger for Ruby
 
-* {RubyGems}[http://rubygems.org/gems/treetagger-ruby]
-* {Homepage}[http://bu.chsta.be/]
-* {RTT Project Page}[http://bu.chsta.be/projects/treetagger-ruby/]
-* {Source Code}[https://github.com/arbox/treetagger-ruby]
-* {Bug Tracker}[https://github.com/arbox/treetagger-ruby/issues]
+{RubyGems}[http://rubygems.org/gems/treetagger-ruby] | {RTT Project Page}[http://bu.chsta.be/projects/treetagger-ruby/] |
+{Source Code}[https://github.com/arbox/treetagger-ruby] | {Bug Tracker}[https://github.com/arbox/treetagger-ruby/issues]
+
+{<img src="https://badge.fury.io/rb/wlapi.png" alt="Gem Version" />}[http://badge.fury.io/rb/wlapi]
+{<img src="https://travis-ci.org/arbox/wlapi.png" alt="Build Status" />}[https://travis-ci.org/arbox/treetagger-ruby]
+{<img src="https://codeclimate.com/github/arbox/wlapi.png" alt="Code Climate" />}[https://codeclimate.com/github/arbox/treetagger-ruby]
+{<img alt="Bitdeli Badge" src="https://d2weczhvl823v0.cloudfront.net/arbox/treetagger-ruby/trend.png" />}[https://bitdeli.com/free]
 
 == DESCRIPTION
 A Ruby based wrapper for the TreeTagger by Helmut Schmid.
