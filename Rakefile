@@ -11,6 +11,9 @@ CLOBBER.include('ydoc',
                 '.yardoc',
                 '*.gem')
 
+
+task :default => [:v]
+
 # Generate documentation.
 require 'rdoc/task'
 RDoc::Task.new do |rdoc|
