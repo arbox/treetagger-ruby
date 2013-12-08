@@ -15,11 +15,10 @@ Check it out if you are interested in Natural Language Processing (NLP)
 and/or Human Language Technology (HLT).
 
 This library provides comprehensive bindings for the
-{TreeTagger}[http://www.ims.uni-stuttgart.de/projekte/corplex/TreeTagger/],
+{TreeTagger}[http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/],
 a statistical language independed POS tagging and chunking software.
 
-TreeTagger is language agnostic, it will never guess what language you're going
-to use. It 
+TreeTagger is language agnostic, it will never guess what language you're going to use. 
 
 TODO:
 * References to Schmid's publications;
