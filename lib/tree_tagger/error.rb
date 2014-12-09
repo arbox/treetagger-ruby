@@ -4,16 +4,12 @@ module TreeTagger
   class Error < StandardError; end
 
   # Somethig went wrong: no env variable, data not coded prperly etc.
-  class ExternalError < Error
-  end
+  ExternalError = Class.new(Error)
 
   # Exectution error, an assert like exception.
-  class RuntimeError < Error
-    
-  end
+  RuntimeError = Class.new(Error)
 
   # User tries to use the lib in a wrong manner, e.g. provides
   # wrong parameters.
-  class UserError < Error
-  end
+  UserError = Class.new(Error)
 end
