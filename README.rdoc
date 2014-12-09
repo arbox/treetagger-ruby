@@ -74,7 +74,7 @@ Alternatively use your Gemfile for dependency management.
 == SYNOPSIS
 === Basic Usage
 Basic usage is very simple:
-  $ require 'treetagger-ruby'
+  $ require 'treetagger'
   $ # Instantiate a tagger instance with default values.
   $ tagger = TreeTagger::Tagger.new
   $ # Process an array of tokens.
