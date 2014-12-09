@@ -6,7 +6,6 @@
 {<img src="https://badge.fury.io/rb/treetagger-ruby.png" alt="Gem Version" />}[http://badge.fury.io/rb/treetagger-ruby]
 {<img src="https://travis-ci.org/arbox/treetagger-ruby.png" alt="Build Status" />}[https://travis-ci.org/arbox/treetagger-ruby]
 {<img src="https://codeclimate.com/github/arbox/treetagger-ruby.png" alt="Code Climate" />}[https://codeclimate.com/github/arbox/treetagger-ruby]
-{<img alt="Bitdeli Badge" src="https://d2weczhvl823v0.cloudfront.net/arbox/treetagger-ruby/trend.png" />}[https://bitdeli.com/free]
 
 == DESCRIPTION
 A Ruby based wrapper for the TreeTagger by Helmut Schmid.
