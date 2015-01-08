@@ -1,4 +1,4 @@
-lib_path = File.expand_path(File.dirname(__FILE__) + '/lib')
+lib_path = File.expand_path(File.join(File.dirname(__FILE__), 'lib'))
 $LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
 
 # Rake provides FileUtils and its own FileUtils extensions
@@ -10,7 +10,6 @@ CLOBBER.include('ydoc',
                 'rdoc',
                 '.yardoc',
                 '*.gem')
-
 
 task :default => [:v]
 
@@ -32,7 +31,6 @@ YARD::Rake::YardocTask.new do |ydoc|
   ydoc.name = 'ydoc'
 end
 
-
 # Testing.
 require 'rake/testtask'
 Rake::TestTask.new do |t|
@@ -41,8 +39,6 @@ Rake::TestTask.new do |t|
   t.ruby_opts = ['-rubygems']
   t.test_files = FileList['test/*.rb']
 end
-
-
 
 desc 'Open an irb session preloaded with this library.'
 task :console do
@@ -57,10 +53,10 @@ end
 
 desc 'Document the code using Yard and RDoc.'
 task :doc => [:clobber, :rdoc, :ydoc]
-  
+
 desc 'Release the library.'
 task :release => [:tag, :build, :publish] do
-  
+
 end
 
 desc 'Tag the current source code version.'
@@ -75,5 +71,6 @@ end
 
 desc 'Publish the documentation on the homepage.'
 task :publish => [:clobber, :doc] do
-  system 'scp -r ydoc/* arbox@bu.chsta.be:/var/www/sites/bu.chsta.be/htdocs/shared/projects/treetagger-ruby'
+  destination = 'arbox@bu.chsta.be:/var/www/sites/bu.chsta.be/htdocs/shared/projects/treetagger-ruby'
+  system "scp -r ydoc/* #{destination}"
 end
