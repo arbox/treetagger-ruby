@@ -2,16 +2,6 @@
 require 'thread'
 require 'tree_tagger/error'
 
-=begin
-TODO:
-- Observe the status of the reader thread.
-- Control the status of the pipe and recreate it.
-- Handle IO errors.
-- Handle errors while allocating the TT object.
-- Update the flush sentence, make it shorter.
-- Store the queue on a persistant medium, not in the memory.
-- Properly set the $ORS for all platforms.
-=end
 # :main: README.rdoc
 # :title: TreeTagger - Ruby based Wrapper for the TreeTagger by Helmut Schmid
 # Module comment
@@ -21,10 +11,12 @@ module TreeTagger
 
     BEGIN_MARKER = '<BEGIN_OF_THE_TT_INPUT>'
     END_MARKER   = '<END_OF_THE_TT_INPUT>'
-    # TT seems to hold only the last three tokens in the buffer.
-    # The flushing sentence can be shortened down to this size.
+    # TT works with trigrams, so it needs at least three meaningful tokens
+    # (no blanks) additionaly to output the last intended token. We achieve this
+    # with a flushing sentence which is filtered out later on.
+    # The flushing sentence can be shortened down to the size of three tokens.
     FLUSH_SENTENCE = "Das\nist\nein\nTestsatz\n,\num\ndas\nStossen\nder\nDaten\nsicherzustellen\n."
-    
+
     # Initializer comment
     def initialize(opts = {
                      :binary => nil,
@@ -50,7 +42,7 @@ module TreeTagger
       @enqueued_tokens = 0
       @mutex = Mutex.new
       @queue_mutex = Mutex.new
-      # sleep(1) # Don't know if it's useful, no problems before.
+      # sleep(1) # Don't know if it's useful, no problems so far.
     end
 
     # Send the string to the TreeTagger.
@@ -94,7 +86,7 @@ module TreeTagger
         output.any? ? output : nil
       end
     end
-    
+
     # Get the rest of the text back.
     # TT holds some meaningful parts in the buffer.
     def flush
@@ -102,10 +94,10 @@ module TreeTagger
       str = "#{END_MARKER}\n#{FLUSH_SENTENCE}\n"
       @pipe.print(str)
       # Here invoke the reader thread to ensure
-      # all output has been read.
+      # the whole output has been read.
       #@reader.run
     end
-    
+
     private
     # Return the options hash after validation.
     #  {
@@ -131,7 +123,7 @@ module TreeTagger
       # Check if <:blank_tag> is a string.
 
       # Ensure that <:blank_tag> is a valid SGML sequence.
-      
+
       # Set the model and binary paths if not provided.
       [:binary, :model].each do |key|
         if opts[key].nil?
@@ -141,7 +133,7 @@ module TreeTagger
           end
         end
       end
-      
+
       # Set the lexicon path if not provided but requested.
       if opts[:lookup] && opts[:lexicon].nil?
         opts[:lookup] = ENV.fetch('TREETAGGER_LEXICON') do |missing|
@@ -154,10 +146,10 @@ module TreeTagger
       # * binary;
       # * model;
       # * lexicon (if applicable).
-      
+
       opts
     end
-    
+
     # Starts the reader thread.
     def new_reader
       Thread.new do
@@ -180,7 +172,7 @@ module TreeTagger
         end
       end # thread
     end # start_reader
-    
+
     # This method may be utilized to keep the TT process alive.
     # Check here if TT returns the exit code 1 in case on invalide options.
     def new_pipe
@@ -196,7 +188,7 @@ module TreeTagger
       if input.empty?
         fail UserError, "Empty input is not allowed!"
       end
-      
+
       if input.is_a?(Array)
         input.each do |el|
           unless el.is_a?(String)
@@ -206,10 +198,10 @@ module TreeTagger
         end
         input = input.join("\n")
       end
-      
+
       input
     end
-    
+
     def sanitize(str)
       line = str.strip
       if line.empty?
@@ -220,9 +212,3 @@ module TreeTagger
     end
   end # class
 end # module
-
-__END__
-- tokenization
-- lexicon lookup
-- tagging
-- error correction
