@@ -27,12 +27,12 @@ The tagger is described in the following two papers:
 ### INSTALLATION
 Before you install the <tt>treetagger-ruby</tt> package please ensure
 you have downloaded and installed the
-{TreeTagger}[http://www.ims.uni-stuttgart.de/projekte/corplex/TreeTagger/]
+[TreeTagger](http://www.ims.uni-stuttgart.de/projekte/corplex/TreeTagger/)
 itself.
 
-The {TreeTagger}[http://www.ims.uni-stuttgart.de/projekte/corplex/TreeTagger/]
+The [TreeTagger](http://www.ims.uni-stuttgart.de/projekte/corplex/TreeTagger/)
 is a copyrighted software by Helmut Schmid and
-{IMS}[http://www.ims.uni-stuttgart.de/], please read the license
+[IMS](http://www.ims.uni-stuttgart.de/), please read the license
 agreament before you download the TreeTagger package and language models.
 
 After the installation of the <tt>TreeTagger</tt> set the environment variable
@@ -51,16 +51,13 @@ For instance you may add the following lines to your <tt>.profile</tt> file:
 It is convinient to work with a default language model, but you can change
 it every time during the instantiation of a new tagger instance.
 
-If you want to feed a lexicon file into your tagger you can do it globally
-through the environment variable <tt>TREETAGGER_LEXICON</tt>.
-
-<tt>treetagger-ruby</tt> is provided as a .gem package. Simply install it via
+`treetagger-ruby` is provided as a `.gem` package. Simply install it via
 [RubyGems](http://rubygems.org/gems/treetagger-ruby).
 To install <tt>treetagger-ruby</tt> issue the following command:
   $ gem install treetagger-ruby
 
 If you want to do a system wide installation, do this as root
-(possibly using +sudo+).
+(possibly using `sudo`).
 
 Alternatively use your Gemfile for dependency management.
 
@@ -69,17 +66,19 @@ Alternatively use your Gemfile for dependency management.
 ### Basic Usage
 
 Basic usage is very simple:
-  $ require 'treetagger'
-  $ # Instantiate a tagger instance with default values.
-  $ tagger = TreeTagger::Tagger.new
-  $ # Process an array of tokens.
-  $ tagger.process(%w{Ich gehe in die Schule})
-  $ # Flush the pipeline.
-  $ tagger.flush
-  $ # Get the processed data.
-  $ tagger.get_output
 
-=== Input Format
+    $ require 'treetagger'
+    $ # Instantiate a tagger instance with default values.
+    $ tagger = TreeTagger::Tagger.new
+    $ # Process an array of tokens.
+    $ tagger.process(%w{Ich gehe in die Schule})
+    $ # Flush the pipeline.
+    $ tagger.flush
+    $ # Get the processed data.
+    $ tagger.get_output
+
+### Input Format
+
 Basically you have to provide a tokenized sequence with possibly some additional
 information on lexical classes of tokens and on their probabilities. Every token
 has to be on a separate line. Due to technical limitations SGML tags
@@ -110,7 +109,7 @@ You input may look like the following sentence:
   .
 
 
-This wrapper accepts the input as <em>String</em> or <em>Array</em>.
+This wrapper accepts the input as `String` or `Array`.
 
 If you want to use strings, you are responsible for the proper delimiters inside
 the string: <tt>"Die\\tART 0.99\\nneuen\\tADJA neu\\nHunde\\tNN NP\\nstehen\\t
@@ -133,12 +132,12 @@ tab separated and entries a blank separated.
 
 Note that probabilities may be strings or integers.
 
-The lexicon lookup is +not+ implemented for now, that's the latter three forms
+The lexicon lookup is *not* implemented for now, that's the latter three forms
 of input arrays are not supported yet.
 
 ### Output Format
 For now you'll get an array with strings elements. However the precise string
-structure depends on the cmd arguments you've provided during the tagger
+structure depends on the command line arguments you've provided during the tagger
 instantiation.
 
 For instanse for the input <tt>["Veruntreute", "die", "AWO", "Spendengeld", "?"]
