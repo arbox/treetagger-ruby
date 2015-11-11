@@ -1,37 +1,30 @@
-= TreeTagger for Ruby
+# TreeTagger for Ruby
 
-{RubyGems}[http://rubygems.org/gems/treetagger-ruby] | {RTT Project Page}[http://bu.chsta.be/projects/treetagger-ruby/] |
-{Source Code}[https://github.com/arbox/treetagger-ruby] | {Bug Tracker}[https://github.com/arbox/treetagger-ruby/issues]
+[RubyGems](http://rubygems.org/gems/treetagger-ruby) | [RTT Project Page](http://bu.chsta.be/projects/treetagger-ruby/) |
+[Source Code](https://github.com/arbox/treetagger-ruby) | [Bug Tracker](https://github.com/arbox/treetagger-ruby/issues)
 
-{<img src="https://badge.fury.io/rb/treetagger-ruby.png" alt="Gem Version" />}[http://badge.fury.io/rb/treetagger-ruby]
-{<img src="https://travis-ci.org/arbox/treetagger-ruby.png" alt="Build Status" />}[https://travis-ci.org/arbox/treetagger-ruby]
-{<img src="https://codeclimate.com/github/arbox/treetagger-ruby.png" alt="Code Climate" />}[https://codeclimate.com/github/arbox/treetagger-ruby]
+[<img src="https://badge.fury.io/rb/treetagger-ruby.png" alt="Gem Version" />](http://badge.fury.io/rb/treetagger-ruby)
+[<img src="https://travis-ci.org/arbox/treetagger-ruby.png" alt="Build Status" />](https://travis-ci.org/arbox/treetagger-ruby)
+[<img src="https://codeclimate.com/github/arbox/treetagger-ruby.png" alt="Code Climate" />](https://codeclimate.com/github/arbox/treetagger-ruby)
 
-== DESCRIPTION
+## DESCRIPTION
 A Ruby based wrapper for the TreeTagger by Helmut Schmid.
 
 Check it out if you are interested in Natural Language Processing (NLP) and/or Human Language Technology (HLT).
 
 This library provides comprehensive bindings for the
-{TreeTagger}[http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/],
+[TreeTagger](http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/),
 a statistical language independed POS tagging and chunking software.
 
-TreeTagger is language agnostic, it will never guess what language you're going to use. 
+TreeTagger is language agnostic, it will never guess what language you're going to use.
 
-TODO:
-* References to Schmid's publications;
-* How to use TreeTagger in the wild;
-* Input and output format, tokenization;
-* ...
-* The actual german parameter file has been estimated on one byte encoded data.
+The tagger is described in the following two papers:
 
-=== Implemented Features
-Simple tagging.
+* Helmut Schmid (1995): [Improvements in Part-of-Speech Tagging with an Application to German.](http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/tree-tagger2.pdf) Proceedings of the ACL SIGDAT-Workshop. Dublin, Ireland.
 
-Please have a look at the CHANGELOG file for details on implemented and planned
-features. 
+* Helmut Schmid (1994): [Probabilistic Part-of-Speech Tagging Using Decision Trees.](http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/tree-tagger1.pdf) Proceedings of International Conference on New Methods in Language Processing, Manchester, UK.
 
-== INSTALLATION
+### INSTALLATION
 Before you install the <tt>treetagger-ruby</tt> package please ensure
 you have downloaded and installed the
 {TreeTagger}[http://www.ims.uni-stuttgart.de/projekte/corplex/TreeTagger/]
@@ -51,8 +44,9 @@ Also you have to set the variable <tt>TREETAGGER_MODEL</tt> to the location of
 the appropriate language model you have acquired in the training step.
 
 For instance you may add the following lines to your <tt>.profile</tt> file:
-  export TREETAGGER_BINARY='/path/to/your/TreeTagger/bin/tree-tagger'
-  export TREETAGGER_MODEL='/path/to/your/TreeTagger/lib/german.par'
+
+    export TREETAGGER_BINARY='/path/to/your/TreeTagger/bin/tree-tagger'
+    export TREETAGGER_MODEL='/path/to/your/TreeTagger/lib/german.par'
 
 It is convinient to work with a default language model, but you can change
 it every time during the instantiation of a new tagger instance.
@@ -61,7 +55,7 @@ If you want to feed a lexicon file into your tagger you can do it globally
 through the environment variable <tt>TREETAGGER_LEXICON</tt>.
 
 <tt>treetagger-ruby</tt> is provided as a .gem package. Simply install it via
-{RubyGems}[http://rubygems.org/gems/treetagger-ruby].
+[RubyGems](http://rubygems.org/gems/treetagger-ruby).
 To install <tt>treetagger-ruby</tt> issue the following command:
   $ gem install treetagger-ruby
 
@@ -71,8 +65,9 @@ If you want to do a system wide installation, do this as root
 Alternatively use your Gemfile for dependency management.
 
 
-== SYNOPSIS
-=== Basic Usage
+## SYNOPSIS
+### Basic Usage
+
 Basic usage is very simple:
   $ require 'treetagger'
   $ # Instantiate a tagger instance with default values.
@@ -88,7 +83,7 @@ Basic usage is very simple:
 Basically you have to provide a tokenized sequence with possibly some additional
 information on lexical classes of tokens and on their probabilities. Every token
 has to be on a separate line. Due to technical limitations SGML tags
-(i.e. sequences with heading < and trailing >) cannot be valid tokes since
+(i.e. sequences with heading < and trailing >) cannot be valid tokens since
 they are used internally for delimiting meaningful content from flush tokens.
 It implies the use of the <tt>-sgml</tt> option which cannot be changes by user.
 It is a limitation of <em>this</em> library. If you do need to process tags,
@@ -141,7 +136,7 @@ Note that probabilities may be strings or integers.
 The lexicon lookup is +not+ implemented for now, that's the latter three forms
 of input arrays are not supported yet.
 
-=== Output Format
+### Output Format
 For now you'll get an array with strings elements. However the precise string
 structure depends on the cmd arguments you've provided during the tagger
 instantiation.
@@ -155,21 +150,28 @@ For instanse for the input <tt>["Veruntreute", "die", "AWO", "Spendengeld", "?"]
 See documentation in the TreeTagger::Tagger class for details
 on particular methods.
 
-== EXCEPTION HIERARCHY
+## Exception Hierarchy
+
 While using TreeTagger you can face following errors:
-* <tt>TreeTagger::UserError</tt>;
-* <tt>TreeTagger::RuntimeError</tt>;
-* <tt>TreeTagger::ExternalError</tt>.
+* `TreeTagger::UserError`;
+* `TreeTagger::RuntimeError`;
+* `TreeTagger::ExternalError`.
 
 This three kinds of errors all subclass <tt>TreeTagger::Error</tt>, which
 in turn is a subclass of <tt>StandardError</tt>. For an end user this means that
-it is possible to intercept all errors from <em>treetagger-ruby</em> with
-a simple <tt>rescue</tt> clause.
+it is possible to intercept all errors from `treetagger-ruby` with
+a simple `rescue` clause.
 
-== SUPPORT
+### Implemented Features
+
+Please have a look at the [CHANGELOG](CHANGELOG.rdoc) file for details on implemented
+and planned features.
+
+
+## SUPPORT
 If you have question, bug reports or any suggestions, please drop me an email :)
 
-== HOW TO CONTRIBUTE
+## HOW TO CONTRIBUTE
 Please contact me and suggest your ideas, report bugs, talk to me, if you want
 to implement some features in the future releases of this library.
 
@@ -178,18 +180,17 @@ to review them and find the appropriate time and place in the code base to
 incorporate your valuable changes.
 
 Any help is deeply appreciated!
-== CHANGELOG
-For details on future plan and working progress see CHANGELOG.
 
-== CAUTION
-This library is <b>work in process</b>! Though the interface is mostly complete,
-you might face some not implemented features.
-
-Please contact me with your suggestions, bug reports and feature requests.
-== LICENSE
+## LICENSE
 
 RTT is a copyrighted software by Andrei Beliankou, 2011-
 
 You may use, redistribute and change it under the terms
-provided in the LICENSE file.
+provided in the [LICENSE](LICENSE.rdoc) file.
 
+
+# TODO:
+
+* How to use TreeTagger in the wild;
+* Input and output format, tokenization;
+* The actual german parameter file has been estimated on one byte encoded data.
